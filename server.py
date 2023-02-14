@@ -1,20 +1,20 @@
 from fastapi import FastAPI, Path, Query, HTTPException, status
+from fastapi.responses import RedirectResponse
 from typing import Optional
 from pydantic import BaseModel
-import model
+import models
 from config import engine
-from routes import router
+from person_route import person_router
+from team_route import team_router
 
-model.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 @app.get('/')
 def home():
-    return {"Data": "Test"}
+    return RedirectResponse(url='/docs')
 
-@app.get('/about')
-def about():
-    return {"Data": "About"}
+app.include_router(person_router,prefix="/person",tags=["person"])
 
-app.include_router(router,prefix="/book",tags="[book]")
+app.include_router(team_router,prefix="/team",tags=["team"])
