@@ -8,6 +8,9 @@ def get_team(db:Session, skip: int=0, limit:int=100):
 def get_team_by_id(db:Session, team_id: int):
     return db.query(Team).filter(Team.id == team_id).first()
 
+def get_people_on_team(db:Session, team_id: int):
+    return db.query(Person).filter(Person.team_id == team_id).all()
+
 def create_team(db:Session, team: TeamSchema):
     _team = Team(name=team.name, description=team.description)
     db.add(_team)

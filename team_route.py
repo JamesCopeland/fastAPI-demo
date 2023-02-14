@@ -26,6 +26,8 @@ async def get(db:Session=Depends(get_db)):
 @team_router.get("/{id}")
 async def get_by_id(id:int, db:Session = Depends(get_db)):
     _team = team_crud.get_team_by_id(db,id)
+    _people = team_crud.get_people_on_team(db,id)
+    _team.people = _people
     return Response(code=200, status="Ok", message="Got team", result=_team).dict(exclude_none=True)
 
 @team_router.patch("/update")
