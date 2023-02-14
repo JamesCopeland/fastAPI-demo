@@ -23,11 +23,16 @@ def remove_person(db:Session, person_id:int):
 def update_person(db:Session, person_id:int, title:str, description:str, firstName:str, lastName:str, team_id:int):
     _person = get_person_by_id(db=db, person_id=person_id)
 
-    _person.title = title
-    _person.description = description
-    _person.firstName = firstName
-    _person.lastName = lastName
-    _person.team_id = team_id
+    if title is not None:
+        _person.title = title
+    if description is not None:
+        _person.description = description
+    if firstName is not None:
+        _person.firstName = firstName
+    if lastName is not None:
+        _person.lastName = lastName
+    if team_id is not None:
+        _person.team_id = team_id
 
     db.commit()
     db.refresh(_person)

@@ -23,8 +23,10 @@ def remove_team(db:Session, team_id:int):
 def update_team(db:Session, team_id:int, name:str, description:str):
     _team = get_team_by_id(db=db, team_id=team_id)
 
-    _team.name = name
-    _team.description = description
+    if name is not None:
+        _team.name = name
+    if description is not None:
+        _team.description = description
     
     db.commit()
     db.refresh(_team)
